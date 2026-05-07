@@ -1,7 +1,9 @@
 import express from "express";
 import { findAllTickets } from "./services/ticketsService.js";
+import { ticketsRouter } from "./routes/tickets.routes.js";
 
 const app = express();
+export const router = express.Router();
 
 //Chargement du fichier .env dans les variables d'environnement
 (async () => {
@@ -9,11 +11,7 @@ const app = express();
   console.log(".env chargé"); // Affiche la valeur depuis .env
 })();
 
-app.get("/tickets", (req, res) => {
-  const tickets = findAllTickets();
-  console.log(JSON.stringify(tickets));
-  res.json(tickets);
-});
+app.use("/tickets", ticketsRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("Server is running on http://localhost:" + process.env.PORT);
