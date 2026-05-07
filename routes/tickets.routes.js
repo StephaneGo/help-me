@@ -1,5 +1,5 @@
 import express from "express";
-import { findAllTickets } from "../services/ticketsService";
+import { findAllTickets } from "../services/ticketsService.js";
 
 export const ticketsRouter = express.Router();
 
