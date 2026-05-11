@@ -7,6 +7,8 @@ const { body, validationResult } = require("express-validator");
 const {
   findAllTickets,
   createTicket,
+  updateTicket,
+  deleteTicket,
 } = require("../services/ticketsService.js");
 
 const ticketsRouter = express.Router();
@@ -44,6 +46,36 @@ ticketsRouter.post("/", validateTicket, (req, res) => {
 
   const ticket = createTicket(titre, description);
   res.status(201).json(ticket);
+});
+
+ticketsRouter.patch("/:noTicket", validateTicket, (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    // Renvoie les erreurs de validation
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const noTicket = req.params.noTicket;
+
+  // Données validées
+  const { titre, description } = req.body;
+
+  try {
+    const ticket = updateTicket(noTicket, titre, description);
+    return res.status(201).json(ticket);
+  } catch (error) {
+    return res.status(400).json({ errors: error.message });
+  }
+});
+
+ticketsRouter.delete("/:noTicket", (req, res) => {
+  const noTicket = req.params.noTicket;
+  try {
+    deleteTicket(noTicket);
+    return res.status(204).send();
+  } catch (error) {
+    return res.status(404).json({ errors: error.message });
+  }
 });
 
 module.exports = { ticketsRouter }; //export default ticketsRouter;
