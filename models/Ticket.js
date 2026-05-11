@@ -11,10 +11,11 @@ class Ticket {
     this.description = description;
     this.noTicket = uuidv7();
     this.etat = EtatsTicket.OUVERT;
+    this.dateCreation = new Date().toISOString();
   }
 
   toString() {
-    return `Ticket: [noTicket=${this.noTicket}|titre=${this.titre}|description=${this.description}]`;
+    return `Ticket: [noTicket=${this.noTicket}|titre=${this.titre}|description=${this.description}|etat=${this.etat}|dateCreation=${this.dateCreation}  ]`;
   }
 }
 

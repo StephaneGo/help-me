@@ -11,13 +11,27 @@ function initTickets(ticketsJeuEssai) {
   }
 }
 
-initTickets();
+const jeuEssai = [];
+/*jeuEssai.push(new Ticket("ticket1", "descritpion ticket1"));
+jeuEssai.push(new Ticket("ticket2", "descritpion ticket2"));
+jeuEssai.push(new Ticket("ticket3", "descritpion ticket3"));*/
+initTickets(jeuEssai);
 
+/*
+  récupère tous les tickets
+*/
 function findAllTickets() {
   return [...tickets];
+}
+
+function createTicket(titre, description) {
+  const ticket = new Ticket(titre, description);
+  tickets.push(ticket);
+  return ticket;
 }
 
 module.exports = {
   findAllTickets,
   initTickets,
+  createTicket,
 };
