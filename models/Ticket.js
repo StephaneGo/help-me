@@ -1,11 +1,11 @@
-import { uuidv7 } from "uuidv7";
+const { uuidv7 } = require("uuidv7");
 
-export const EtatsTicket = Object.freeze({
+const EtatsTicket = Object.freeze({
   OUVERT: 1,
   CLOS: 2,
 });
 
-export class Ticket {
+class Ticket {
   constructor(titre, description) {
     this.titre = titre;
     this.description = description;
@@ -17,3 +17,6 @@ export class Ticket {
     return `Ticket: [noTicket=${this.noTicket}|titre=${this.titre}|description=${this.description}]`;
   }
 }
+
+exports.Ticket = Ticket;
+exports.EtatsTicket = EtatsTicket;

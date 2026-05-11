@@ -1,9 +1,15 @@
+/*
 import express from "express";
 import { findAllTickets } from "./services/ticketsService.js";
 import { ticketsRouter } from "./routes/tickets.routes.js";
+*/
+const express = require("express");
+const { findAllTickets } = require("./services/ticketsService.js");
+const { ticketsRouter } = require("./routes/tickets.routes.js");
 
 const app = express();
-export const router = express.Router();
+const router = express.Router();
+exports.router = router;
 
 //Chargement du fichier .env dans les variables d'environnement
 (async () => {

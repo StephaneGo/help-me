@@ -1,16 +1,23 @@
-import { Ticket, EtatsTicket } from "../models/Ticket.js";
+//import { Ticket, EtatsTicket } from "../models/Ticket.js";
+const { Ticket, EtatsTicket } = require("../models/Ticket.js");
 
 const tickets = [];
 
 //TODO : A supprimer !!!
-function initTickets() {
-  tickets.push(new Ticket("ticket1", "descritpion ticket1"));
-  tickets.push(new Ticket("ticket2", "descritpion ticket2"));
-  tickets.push(new Ticket("ticket3", "descritpion ticket3"));
+function initTickets(ticketsJeuEssai) {
+  if (ticketsJeuEssai) {
+    tickets.splice(0);
+    tickets.push(...ticketsJeuEssai);
+  }
 }
 
 initTickets();
 
-export function findAllTickets() {
+function findAllTickets() {
   return [...tickets];
 }
+
+module.exports = {
+  findAllTickets,
+  initTickets,
+};
