@@ -1,21 +1,17 @@
-/*
-import express from "express";
-import { findAllTickets } from "./services/ticketsService.js";
-import { ticketsRouter } from "./routes/tickets.routes.js";
-*/
-const express = require("express");
-const { findAllTickets } = require("./services/ticketsService.js");
-const { ticketsRouter } = require("./routes/tickets.routes.js");
-
-const app = express();
-app.use(express.json()); // Permet de lire le corps de la requête en JSON
-const router = express.Router();
-exports.router = router;
+const { load } = require("./config/env.js");
 
 //Chargement du fichier .env dans les variables d'environnement
 (async () => {
-  await process.loadEnvFile(".env");
-  console.log(".env chargé"); // Affiche la valeur depuis .env
+  await load();
+
+  const express = require("express");
+  const { findAllTickets } = require("./services/ticketsService.js");
+  const { ticketsRouter } = require("./routes/tickets.routes.js");
+
+  const app = express();
+  app.use(express.json()); // Permet de lire le corps de la requête en JSON
+  const router = express.Router();
+  exports.router = router;
 
   app.use("/tickets", ticketsRouter);
 

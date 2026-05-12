@@ -1,32 +1,38 @@
 //import { Ticket, EtatsTicket } from "../models/Ticket.js";
 const { Ticket, EtatsTicket } = require("../models/Ticket.js");
+const { getDb } = require("../config/db");
 
-const tickets = [];
+const ticketsCollection = () => getDb().collection("tickets");
 
 //TODO : A supprimer !!!
+
 function initTickets(ticketsJeuEssai) {
+  /*
   if (ticketsJeuEssai) {
     tickets.splice(0);
     tickets.push(...ticketsJeuEssai);
   }
+    */
 }
 
-const jeuEssai = [];
+//const jeuEssai = [];
 /*jeuEssai.push(new Ticket("ticket1", "descritpion ticket1"));
 jeuEssai.push(new Ticket("ticket2", "descritpion ticket2"));
 jeuEssai.push(new Ticket("ticket3", "descritpion ticket3"));*/
-initTickets(jeuEssai);
+//initTickets(jeuEssai);
 
 /*
   récupère tous les tickets
 */
-function findAllTickets() {
-  return [...tickets];
+async function findAllTickets() {
+  const tickets = await ticketsCollection().find().toArray();
+  return tickets;
 }
 
-function createTicket(titre, description) {
+async function createTicket(titre, description) {
   const ticket = new Ticket(titre, description);
-  tickets.push(ticket);
+  await ticketsCollection().insertOne(ticket);
+  console.log(`Ticket créé: ${ticket}`, ticket);
   return ticket;
 }
 

@@ -28,13 +28,13 @@ const validateTicket = [
     .withMessage("La description doit contenir au moins 3 caractères"),
 ];
 
-ticketsRouter.get("/", (req, res) => {
-  const tickets = findAllTickets();
+ticketsRouter.get("/", async (req, res) => {
+  const tickets = await findAllTickets();
   console.log(JSON.stringify(tickets));
   res.json(tickets);
 });
 
-ticketsRouter.post("/", validateTicket, (req, res) => {
+ticketsRouter.post("/", validateTicket, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     // Renvoie les erreurs de validation
@@ -44,11 +44,11 @@ ticketsRouter.post("/", validateTicket, (req, res) => {
   // Données validées
   const { titre, description } = req.body;
 
-  const ticket = createTicket(titre, description);
+  const ticket = await createTicket(titre, description);
   res.status(201).json(ticket);
 });
 
-ticketsRouter.patch("/:noTicket", validateTicket, (req, res) => {
+ticketsRouter.patch("/:noTicket", validateTicket, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     // Renvoie les erreurs de validation
@@ -61,17 +61,17 @@ ticketsRouter.patch("/:noTicket", validateTicket, (req, res) => {
   const { titre, description } = req.body;
 
   try {
-    const ticket = updateTicket(noTicket, titre, description);
+    const ticket = await updateTicket(noTicket, titre, description);
     return res.status(201).json(ticket);
   } catch (error) {
     return res.status(400).json({ errors: error.message });
   }
 });
 
-ticketsRouter.delete("/:noTicket", (req, res) => {
+ticketsRouter.delete("/:noTicket", async (req, res) => {
   const noTicket = req.params.noTicket;
   try {
-    deleteTicket(noTicket);
+    await deleteTicket(noTicket);
     return res.status(204).send();
   } catch (error) {
     return res.status(404).json({ errors: error.message });
