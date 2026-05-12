@@ -16,10 +16,15 @@ exports.router = router;
 (async () => {
   await process.loadEnvFile(".env");
   console.log(".env chargé"); // Affiche la valeur depuis .env
+
+  app.use("/tickets", ticketsRouter);
+
+  // Connexion à la base de données
+  const { connectDB } = require("./config/db");
+  await connectDB();
+  console.log("MongoDB connecté");
+
+  app.listen(process.env.PORT, () => {
+    console.log("Server is running on http://localhost:" + process.env.PORT);
+  });
 })();
-
-app.use("/tickets", ticketsRouter);
-
-app.listen(process.env.PORT, () => {
-  console.log("Server is running on http://localhost:" + process.env.PORT);
-});

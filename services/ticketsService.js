@@ -12,9 +12,9 @@ function initTickets(ticketsJeuEssai) {
 }
 
 const jeuEssai = [];
-jeuEssai.push(new Ticket("ticket1", "descritpion ticket1"));
+/*jeuEssai.push(new Ticket("ticket1", "descritpion ticket1"));
 jeuEssai.push(new Ticket("ticket2", "descritpion ticket2"));
-jeuEssai.push(new Ticket("ticket3", "descritpion ticket3"));
+jeuEssai.push(new Ticket("ticket3", "descritpion ticket3"));*/
 initTickets(jeuEssai);
 
 /*
