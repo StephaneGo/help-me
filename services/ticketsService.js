@@ -1,6 +1,7 @@
 //import { Ticket, EtatsTicket } from "../models/Ticket.js";
 const { Ticket, EtatsTicket } = require("../models/Ticket.js");
 const { getDb } = require("../config/db");
+const { logger } = require("../config/logs.js");
 
 const ticketsCollection = () => getDb().collection("tickets");
 
@@ -26,11 +27,14 @@ jeuEssai.push(new Ticket("ticket3", "descritpion ticket3"));*/
 */
 async function findAllTickets() {
   const tickets = await ticketsCollection().find().toArray();
+  logger.debug("ticketsService.findAllTickets", tickets);
+
   return tickets;
 }
 
 async function findOneTicket(noTicket) {
   const ticket = await ticketsCollection().findOne({ noTicket: noTicket });
+  logger.debug("ticketsService.findOneTicket", ticket);
   return ticket;
 }
 
