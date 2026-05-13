@@ -9,6 +9,7 @@ const {
   createTicket,
   updateTicket,
   deleteTicket,
+  findOneTicket,
 } = require("../services/ticketsService.js");
 
 const ticketsRouter = express.Router();
@@ -32,6 +33,12 @@ ticketsRouter.get("/", async (req, res) => {
   const tickets = await findAllTickets();
   console.log(JSON.stringify(tickets));
   res.json(tickets);
+});
+
+ticketsRouter.get("/:id", async (req, res) => {
+  const ticket = await findOneTicket(req.params.id);
+  if (!ticket) return res.status(404).json({ errors: "Ticket non trouvé" });
+  res.json(ticket);
 });
 
 ticketsRouter.post("/", validateTicket, async (req, res) => {

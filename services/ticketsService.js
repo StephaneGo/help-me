@@ -29,6 +29,11 @@ async function findAllTickets() {
   return tickets;
 }
 
+async function findOneTicket(noTicket) {
+  const ticket = await ticketsCollection().findOne({ noTicket: noTicket });
+  return ticket;
+}
+
 async function createTicket(titre, description) {
   const ticket = new Ticket(titre, description);
   await ticketsCollection().insertOne(ticket);
@@ -67,4 +72,5 @@ module.exports = {
   createTicket,
   updateTicket,
   deleteTicket,
+  findOneTicket,
 };
