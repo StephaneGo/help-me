@@ -1,6 +1,7 @@
 /*import express from "express";
 import { findAllTickets } from "../services/ticketsService.js";
 */
+const logger = require("../config/logs.js");
 const express = require("express");
 const { body, validationResult } = require("express-validator");
 
@@ -31,13 +32,18 @@ const validateTicket = [
 
 ticketsRouter.get("/", async (req, res) => {
   const tickets = await findAllTickets();
-  console.log(JSON.stringify(tickets));
+  //console.log(JSON.stringify(tickets));
+  logger.debug("get liste tickets", JSON.stringify(tickets));
   res.json(tickets);
 });
 
 ticketsRouter.get("/:id", async (req, res) => {
   const ticket = await findOneTicket(req.params.id);
-  if (!ticket) return res.status(404).json({ errors: "Ticket non trouvé" });
+  if (!ticket) {
+    logger.debug("get ticket CAS NON TROUVE - noTicket:", req.params.id);
+    return res.status(404).json({ errors: "Ticket non trouvé" });
+  }
+  logger.debug("get ticket", JSON.stringify(ticket));
   res.json(ticket);
 });
 

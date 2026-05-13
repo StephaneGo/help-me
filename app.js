@@ -4,6 +4,7 @@ const { load } = require("./config/env.js");
 (async () => {
   await load();
 
+  const logger = require("./config/logs.js");
   const express = require("express");
   const { findAllTickets } = require("./services/ticketsService.js");
   const { ticketsRouter } = require("./routes/tickets.routes.js");
@@ -18,9 +19,11 @@ const { load } = require("./config/env.js");
   // Connexion à la base de données
   const { connectDB } = require("./config/db");
   await connectDB();
-  console.log("MongoDB connecté");
+  //console.log("MongoDB connecté");
+  logger.info("MongoDB connecté");
 
   app.listen(process.env.PORT, () => {
-    console.log("Server is running on http://localhost:" + process.env.PORT);
+    //console.log("Server is running on http://localhost:" + process.env.PORT);
+    logger.info("Server is running on http://localhost:" + process.env.PORT);
   });
 })();
