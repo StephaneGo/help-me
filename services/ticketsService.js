@@ -36,23 +36,28 @@ async function createTicket(titre, description) {
   return ticket;
 }
 
-function updateTicket(noTicket, titre, description) {
-  const ticket = tickets.find((t) => t.noTicket === noTicket);
+async function updateTicket(noTicket, titre, description) {
+  const ticket = await ticketsCollection().findOne({ noTicket: noTicket });
   if (ticket) {
     ticket.titre = titre;
     ticket.description = description;
+    await ticketsCollection().updateOne(
+      { noTicket: noTicket },
+      { $set: ticket },
+    );
   } else {
-    throw new Error(`Ticket ${noTicket} introuvable`);
+    throw new Error(`Ticket ${noTicket} non trouvé`);
   }
   return ticket;
 }
 
-function deleteTicket(noTicket) {
-  const ticket = tickets.find((t) => t.noTicket === noTicket);
+async function deleteTicket(noTicket) {
+  let ticket;
+  ticket = await ticketsCollection().findOne({ noTicket: noTicket });
   if (ticket) {
-    tickets.splice(tickets.indexOf(ticket), 1);
+    await ticketsCollection().deleteOne({ noTicket: noTicket });
   } else {
-    throw new Error(`Ticket ${noTicket} introuvable`);
+    throw new Error(`Ticket ${noTicket} non trouvé`);
   }
 }
 
